@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Users</title>
+</head>
+<body>
+<h2>All Users</h2>
+<br>
+<br><br>
+  <table>
+    <thead>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Lastname</th>
+    <th>Age</th>
+    <th>Email</th>
+    <th>Operations</th>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+      <td th:text="${user.getId()}"></td>
+      <td th:text="${user.getFirstName()}"></td>
+      <td th:text="${user.getLastName()}"></td>
+      <td th:text="${user.getAge()}"></td>
+      <td th:text="${user.getEmail()}"></td>
+      <td>
+        <a type="button" th:href="@{/users/updateUser(id=${user.id})}">Update</a>
+        <a type="button" th:href="@{/users/deleteUser(id=${user.id})}">Delete</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <br>
+  <input type="button" value="Add User"
+         onclick="window.location.href = '/spring_mvc_war_exploded/addNewUser'">
+
+  </body>
+  </html>
