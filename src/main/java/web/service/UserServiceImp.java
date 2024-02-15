@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public class UserServiceImp implements UserService{
     private final UserDao userDao;
-    @Autowired
+
     public UserServiceImp(UserDao userDao) {
         this.userDao = userDao;
     }
@@ -45,4 +45,5 @@ public class UserServiceImp implements UserService{
     public void delete(int id) {
         userDao.delete(id);
     }
+
 }

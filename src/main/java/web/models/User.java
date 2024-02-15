@@ -38,7 +38,7 @@ public class User {
     public User() {
     }
 
-    public User(String firstName, String lastName,int age, String email, String password) {
+    public User(String firstName, String lastName, int age, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
@@ -50,9 +50,9 @@ public class User {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+//    public void setId(int id) {
+//        this.id = id;
+//    }
 
     public String getFirstName() {
         return firstName;
@@ -91,23 +91,12 @@ public class User {
     }
 
     public void setPassword(String newPassword) {
-        // Проверяем, является ли новый пароль уже зашифрованным
-        if (!isPasswordHashed(newPassword)) {
-            // Если пароль не зашифрован, шифруем его
-            this.password = hashPassword(newPassword);
-        } else {
-            // Если пароль уже зашифрован, сохраняем его без изменений
-            this.password = newPassword;
-        }
+        this.password = hashPassword(newPassword);
     }
+
 
     private static String hashPassword(String plainPassword) {
         return BCrypt.hashpw(plainPassword, BCrypt.gensalt());
-    }
-
-    private static boolean isPasswordHashed(String password) {
-        // Проверяем, начинается ли хеш с префикса "$2a$"
-        return password.startsWith("$2a$");
     }
 
 

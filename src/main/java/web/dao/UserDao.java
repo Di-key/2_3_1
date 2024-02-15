@@ -8,7 +8,7 @@ public interface UserDao {
     List<User> readAllUsers();
     void create(User user);
 
-//    User update(int id);
+    User update(int id);
 
     User findUser(int id);
 

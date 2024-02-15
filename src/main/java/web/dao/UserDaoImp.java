@@ -5,6 +5,7 @@ import web.models.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
@@ -18,12 +19,14 @@ public class UserDaoImp implements UserDao{
     }
     @Override
     public void create(User user) {
-        manager.merge(user);
+        manager.persist(user);
     }
 
-//    @Override
-//    public User update(int id) {
-//        User existingUser = manager.find(User.class, id);
+    @Override
+    public User update(int id) {
+        User existingUser = manager.find(User.class, id);
+        return manager.merge(existingUser);
+    }
 //        if (existingUser != null) {
 //            // Обновляем существующего пользователя в базе данных
 //            return manager.merge(existingUser);
