@@ -1,50 +1,58 @@
 package web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import web.dao.UserDao;
+
 import web.models.User;
 import web.service.UserService;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Controller
 public class UserController {
+    private final UserService userService;
 
-    @Autowired
-    private UserService userService;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
-    @GetMapping("/users")
-    public String getAllUsers(Model model) {
-        List<User> users = userService.getAllUsers();
-        model.addAttribute("users", users);
+    @GetMapping("/")
+    public String getAllUsers(Model model){
+        List<User> allUsers = userService.readAllUsers();
+        model.addAttribute("all", allUsers);
         return "all-users";
     }
-
     @GetMapping("/addNewUser")
-    public String addNewUser(Model model) {
+    public String newUser(Model model){
         User user = new User();
-        model.addAttribute("user", user);
+        model.addAttribute("newUser", user);
         return "user-info";
     }
-
+    @Transactional
     @PostMapping("/saveUser")
-    public String saveUser(@ModelAttribute("user") User user) {
-        userService.saveUser(user);
-        return "redirect:/users";
+    public String create(@ModelAttribute("newUser") User user){
+        userService.create(user);
+        return "redirect:/";
     }
 
-    @GetMapping("/updateUser")
-    public String updateUser(@RequestParam("userId") int id, Model model) {
-        User user = userService.updateUser(id);
-        model.addAttribute("user", user);
+    @Transactional
+    @GetMapping("/updateInfo")
+    public String updateUser(@RequestParam("userID") int id, Model model ){
+        User user = userService.findUser(id);
+        userService.create(user);
+        model.addAttribute("newUser", user);
         return "user-info";
     }
-
-    @GetMapping("/deleteUser")
-    public String deleteUser(@RequestParam("userId") int id) {
-        userService.deleteUser(id);
-        return "redirect:/users";
+    //deleteUser
+    @GetMapping ("/deleteUser")
+    public String deleteUser(@RequestParam("userID") int id){
+        userService.delete(id);
+        return "redirect:/";
     }
 }

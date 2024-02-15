@@ -1,5 +1,9 @@
 package web.models;
 
+import com.sun.istack.NotNull;
+import org.springframework.lang.NonNull;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -9,6 +13,7 @@ public class User {
 
     @Id
     @Column(name = "id")
+    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
@@ -85,9 +90,26 @@ public class User {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(String newPassword) {
+        // Проверяем, является ли новый пароль уже зашифрованным
+        if (!isPasswordHashed(newPassword)) {
+            // Если пароль не зашифрован, шифруем его
+            this.password = hashPassword(newPassword);
+        } else {
+            // Если пароль уже зашифрован, сохраняем его без изменений
+            this.password = newPassword;
+        }
     }
+
+    private static String hashPassword(String plainPassword) {
+        return BCrypt.hashpw(plainPassword, BCrypt.gensalt());
+    }
+
+    private static boolean isPasswordHashed(String password) {
+        // Проверяем, начинается ли хеш с префикса "$2a$"
+        return password.startsWith("$2a$");
+    }
+
 
     @Override
     public boolean equals(Object o) {

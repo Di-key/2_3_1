@@ -1,21 +1,45 @@
-
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/resources/styles.css}">
+    <title>User Info</title>
+</head>
 <body>
-<h2> Employee Info</h2>
-<form th:action="@{/saveUser}" th:object="${user}" method="post">
-    <input type="hidden" th:field="*{id}"/>
-    Name <input type="text" th:field="*{firstName}"/>
-    <br>
-    Lastname <input type="text" th:field="*{lastName}"/>
-    <br>
-    Age <input type="text" th:field="*{age}"/>
-    <br>
-    Email <input type="text" th:field="*{email}"/>
-    <br>
-    Password <input type="password" th:field="*{password}"/>
-    <br>
-    <input type="submit" value="OK"/>
-</form>
+<div class="center">
+    <h2>User info</h2>
+    <form th:action="@{/saveUser}" th:method="POST" th:object="${newUser}">
+        <input type="hidden" th:field="*{id}" th:value="*{getId()}">
+        <table class="table">
+            <tr>
+                <td>Name:</td>
+                <td><label>
+                    <input type="text" th:field="*{firstName}" th:value="${newUser.firstName}"/>
+                </label></td>
+            </tr>
+            <tr>
+                <td>Surname:</td>
+                <td><label>
+                    <input type="text" th:field="*{lastName}" th:value="${newUser.lastName}"/>
+                </label></td>
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td><label>
+                    <input type="text" th:field="*{email}" th:value="${newUser.email}"/>
+                </label></td>
+            </tr>
+            <tr>
+                <td>Password</td>
+                <td><label>
+                    <input type="text" th:field="*{password}" th:value="${newUser.password}"/>
+                </label></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" value="Update"></td>
+            </tr>
+        </table>
+    </form>
+</div>
 </body>
 </html>

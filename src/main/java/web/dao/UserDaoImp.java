@@ -5,33 +5,40 @@ import web.models.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import java.util.List;
+
 @Repository
 public class UserDaoImp implements UserDao{
     @PersistenceContext
-    private EntityManager entityManager;
+    private EntityManager manager;
+
     @Override
-    public List<User> getAllUsers() {
-        return entityManager.createQuery("from User", User.class).getResultList();
+    public List<User> readAllUsers() {
+        return manager.createQuery("from User", User.class).getResultList();
+    }
+    @Override
+    public void create(User user) {
+        manager.merge(user);
+    }
+
+//    @Override
+//    public User update(int id) {
+//        User existingUser = manager.find(User.class, id);
+//        if (existingUser != null) {
+//            // Обновляем существующего пользователя в базе данных
+//            return manager.merge(existingUser);
+//        }
+//        return null;
+//    }
+
+    @Override
+    public User findUser(int id) {
+        return manager.find(User.class, id);
     }
 
     @Override
-    public void saveUser(User user) {
-        entityManager.persist(user);
-        entityManager.flush();;
-    }
-
-    @Override
-    public User updateUser(int id) {
-        return entityManager.find(User.class, id);
-    }
-
-    @Override
-    public void deleteUser(int id) {
-        Query query = entityManager.createQuery("delete from User " +
-                "where id=:userID");
-        query.setParameter("userID", id);
-        query.executeUpdate();
+    public void delete(int id) {
+        User user = manager.find(User.class, id);
+        manager.remove(user);
     }
 }
