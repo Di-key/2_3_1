@@ -8,7 +8,7 @@
 <body>
 <div class="center">
     <h2>User info</h2>
-    <form th:action="@{/saveUser}" th:method="POST" th:object="${newUser}">
+    <form th:action="@{/updateInfo}" th:method="POST" th:object="${newUser}">
         <input type="hidden" th:field="*{id}" th:value="*{getId()}">
         <table class="table">
             <tr>

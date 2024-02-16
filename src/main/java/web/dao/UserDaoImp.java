@@ -23,9 +23,9 @@ public class UserDaoImp implements UserDao{
     }
 
     @Override
-    public User update(int id) {
-        User existingUser = manager.find(User.class, id);
-        return manager.merge(existingUser);
+    public User update(User user) {
+//        User existingUser = manager.find(User.class, id);
+         return manager.merge(user);
     }
 //        if (existingUser != null) {
 //            // Обновляем существующего пользователя в базе данных

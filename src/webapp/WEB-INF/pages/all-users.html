@@ -27,7 +27,7 @@
         <td th:text="${usr.password}">Password</td>
         <td class="tg-action">
           <div>
-            <a class="link-button" th:href="@{/updateInfo(userID=${usr.id})}">Update</a>
+            <a class="link-button" th:href="@{/findUser(userID=${usr.id})}">Update</a>
           </div>
           <div>
             <a class="link-button" th:href="@{/deleteUser(userID=${usr.id})}">Delete</a>

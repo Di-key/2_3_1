@@ -31,21 +31,24 @@ public class UserController {
     @GetMapping("/addNewUser")
     public String newUser(Model model){
         User user = new User();
-        model.addAttribute("newUser", user);
-        return "user-info";
+        model.addAttribute("userAdd", user);
+        return "user-create";
     }
-    @Transactional
     @PostMapping("/saveUser")
     public String create(@ModelAttribute("newUser") User user){
         userService.create(user);
         return "redirect:/";
     }
 
-    @Transactional
-    @GetMapping("/updateInfo")
-    public String updateUser(@RequestParam("userID") int id, Model model ){
+    @PostMapping("/updateInfo")
+    public String updateUser(@ModelAttribute("newUser") User user){
+        userService.update(user);
+        return "redirect:/";
+    }
+
+    @GetMapping("/findUser")
+    public String findUser(@RequestParam("userID") int id, Model model ){
         User user = userService.findUser(id);
-        userService.create(user);
         model.addAttribute("newUser", user);
         return "user-info";
     }

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" th:href="@{/resources/styles.css}">
+  <title>User Info</title>
+</head>
+<body>
+<div class="center">
+  <h2>User info</h2>
+  <form th:action="@{/saveUser}" th:method="POST" th:object="${userAdd}">
+    <table class="table">
+      <tr>
+        <td>Name:</td>
+        <td><label>
+          <input type="text" th:field="*{firstName}" th:value="${userAdd.firstName}"/>
+        </label></td>
+      </tr>
+      <tr>
+        <td>Surname:</td>
+        <td><label>
+          <input type="text" th:field="*{lastName}" th:value="${userAdd.lastName}"/>
+        </label></td>
+      </tr>
+      <tr>
+        <td>Email:</td>
+        <td><label>
+          <input type="text" th:field="*{email}" th:value="${userAdd.email}"/>
+        </label></td>
+      </tr>
+      <tr>
+        <td>Password</td>
+        <td><label>
+          <input type="text" th:field="*{password}" th:value="${userAdd.password}"/>
+        </label></td>
+      </tr>
+      <tr>
+        <td colspan="2"><input type="submit" value="Submit"></td>
+      </tr>
+    </table>
+  </form>
+</div>
+</body>
+</html>

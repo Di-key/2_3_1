@@ -32,11 +32,11 @@ public class UserServiceImp implements UserService{
         return userDao.findUser(id);
     }
 
-//    @Override
-//    @Transactional
-//    public User update(int id) {
-//        return userDao.update(id);
-//    }
+    @Override
+    @Transactional
+    public User update(User user) {
+       return userDao.update(user);
+    }
 
 
 
